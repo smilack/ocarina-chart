@@ -83,12 +83,12 @@ var scales = {
    "C#maj": ["C#5", "D#5", "E#5", "F#5", "G#5", "A#5", "B#5", "C#6"],
    //flats
    "Fmaj": ["F5", "G5", "A5", "Bb5", "C6", "D6", "E6", "F6"],
-   "Bbmaj": [],
-   "Ebmaj": [],
-   "Abmaj": [],
-   "Dbmaj": [],
-   "Gbmaj": [],
-   "Cbmaj": []
+   "Bbmaj": ["Bb4", "C5", "D5", "Eb5", "F5", "G5", "A5", "Bb5"],
+   "Ebmaj": ["Eb5", "F5", "G5", "Ab5", "Bb5", "C6", "D6", "Eb6"],
+   "Abmaj": ["Ab4", "Bb4", "C5", "Db5", "Eb5", "F5", "G5", "Ab5", "Bb5", "C6", "Db6", "Eb6", "F6", "G6", "Ab6"],
+   "Dbmaj": ["Db5", "Eb5", "F5", "Gb5", "Ab5", "Bb5", "C6", "Db6"],
+   "Gbmaj": ["Gb4", "Ab4", "Bb4", "Cb5", "Db5", "Eb5", "F5", "Gb5", "Ab5", "Bb5", "Cb6", "Db6", "Eb6", "F6", "Gb6"],
+   "Cbmaj": ["Cb5", "Db5", "Eb5", "Fb5", "Gb5", "Ab5", "Bb5", "Cb6"]
 };
 
 })();
