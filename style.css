@@ -1,0 +1,49 @@
+.ocarina {
+   fill: none;
+   stroke: #000000;
+   stroke-width: 3;
+}
+
+.ocarina.impossible, 
+.ocarina.impossible ~ .circle {
+   stroke: #CCCCCC;
+}
+
+.ocarina.impossible .circle {
+
+}
+
+.circle {
+   fill: none;
+   stroke: #000000;
+   stroke-width: 2.5;
+}
+
+.circle.covered {
+   fill: #000000;
+}
+
+.fingering {
+   display: inline-block;
+   margin: 2em 0.5em;
+}
+
+.note-name {
+   text-align: center;
+}
+
+.scale-choices {
+   width: 50%;
+   max-width: 500px;
+   min-width: 200px;
+   display: flex;
+   justify-content: space-around;
+   margin: 2em auto 4em;
+}
+
+.scale {
+   width: 80%;
+   max-width: 1111px;
+   min-width: 200px;
+   margin: auto;
+}

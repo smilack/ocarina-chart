@@ -1,0 +1,19 @@
+<!doctype html>
+<html ng-app="app">
+ <head>
+  <title>Ocarina Fingering Charts</title>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script type="text/javascript" src="app.js"></script>
+  <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+  <div ng-controller="ChartController as ctrl">
+   <nav class="scale-choices">
+    <a href="#" ng-repeat="(scale, _) in ctrl.scales" ng-click="ctrl.scale = scale">{{ scale }}</a>
+   </nav>
+   <div class="scale">
+    <ocarina ng-repeat="note in ctrl.scales[ctrl.scale]" note="{{ note }}"></ocarina>
+   </div>
+  </div>
+ </body>
+</html>
