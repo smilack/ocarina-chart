@@ -5,7 +5,6 @@ module('app', []).
 controller('ChartController', function() {
    this.fingerings = fingerings;
    this.notes = notes;
-   this.scaleNotes = scaleNotes;
    this.scales = scales;
 
    this.scale = "Cmaj";
@@ -70,20 +69,26 @@ var notes = {
    "F6":  fingerings[20]
 };
 
-var scaleNotes = [
-   //chromatic
-   [ "A4", "A#4", "B4", "C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5", "C6", "C#6", "D6", "D#6", "E6", "F6" ],
-   //major
-   ["C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6"], //no accidentals
-   ["G4", "A4", "B4", "C5", "D5", "E5", "F#5", "G5", "A5", "B5", "C6", "D6", "E6", "F#6", "G6"], //one sharp
-   ["F5", "G5", "A5", "Bb5", "C6", "D6", "E6", "F6"] // one flat
-];
-
 var scales = {
-   "chromatic": scaleNotes[0],
-   "Cmaj": scaleNotes[1],
-   "Gmaj": scaleNotes[2],
-   "Fmaj": scaleNotes[3]
+   "chromatic": [ "A4", "A#4", "B4", "C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5", "C6", "C#6", "D6", "D#6", "E6", "F6" ],
+   //no accidentals
+   "Cmaj": ["C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6"],
+   //sharps
+   "Gmaj": ["G4", "A4", "B4", "C5", "D5", "E5", "F#5", "G5", "A5", "B5", "C6", "D6", "E6", "F#6", "G6"],
+   "Dmaj": ["D5", "E5", "F#5", "G5", "A5", "B5", "C#6", "D6"],
+   "Amaj": ["A4", "B4", "C#5", "D5", "E5", "F#5", "G#5", "A5"],
+   "Emaj": ["E5", "F#5", "G#5", "A5", "B5", "C#6", "D#6", "E6"],
+   "Bmaj": ["B4", "C#5", "D#5", "E5", "F#5", "G#5", "A#5", "B5"],
+   "F#maj": ["F#5", "G#5", "A#5", "B5", "C#6", "D#6", "E#6", "F#6"],
+   "C#maj": ["C#5", "D#5", "E#5", "F#5", "G#5", "A#5", "B#5", "C#6"],
+   //flats
+   "Fmaj": ["F5", "G5", "A5", "Bb5", "C6", "D6", "E6", "F6"],
+   "Bbmaj": [],
+   "Ebmaj": [],
+   "Abmaj": [],
+   "Dbmaj": [],
+   "Gbmaj": [],
+   "Cbmaj": []
 };
 
 })();
