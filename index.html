@@ -2,14 +2,23 @@
 <html ng-app="app">
  <head>
   <title>Ocarina Fingering Charts</title>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script type="text/javascript" src="angular.js"></script>
+  <script type="text/javascript" src="angular-sanitize.js"></script>
   <script type="text/javascript" src="app.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
  </head>
  <body>
   <div ng-controller="ChartController as ctrl">
    <nav class="scale-choices">
-    <a href="#" ng-repeat="(scale, _) in ctrl.scales" ng-click="ctrl.scale = scale">{{ scale }}</a>
+    <div class="category" ng-repeat="(category, list) in ctrl.menu">
+     <div class="category-name">{{ category }} </div>
+     <div class="list">
+      <div class="category-sublist" ng-repeat="sublist in list">
+       <a href="#" class="scale-choice" ng-repeat="scale in sublist" ng-click="ctrl.scale = scale" ng-bind-html="$root.pprintNote(scale)"></a>
+      </div>
+     </div>
+    </div>
    </nav>
    <div class="scale">
     <ocarina ng-repeat="note in ctrl.scales[ctrl.scale]" note="{{ note }}"></ocarina>

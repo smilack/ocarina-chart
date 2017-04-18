@@ -1,3 +1,8 @@
+body {
+   font-family: "Open Sans", sans-serif;
+   font-size: 16pt;
+}
+
 .ocarina {
    fill: none;
    stroke: #000000;
@@ -33,16 +38,45 @@
 }
 
 .scale-choices {
-   width: 50%;
-   min-width: 200px;
+   max-width: 1200px;
+   margin: 0 auto;
    display: flex;
-   justify-content: space-around;
-   margin: 2em auto 4em;
+   flex-direction: column;
+}
+
+.category {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   align-items: center;
+   margin: 0.5em 0;
+   background-color: #eee;
+   padding: 1em;
+}
+
+.category-name {
+   flex-basis: 20%;
+   text-align: center;
+}
+
+.list {
+   flex-grow: 1;
+   text-align: center;
+}
+
+.scale-choice {
+   display: inline-block;
+   margin: 0.25em 0.5em;
+   text-decoration: none;
+   color: blue;
 }
 
 .scale {
    width: 80%;
-   max-width: 1111px;
-   min-width: 200px;
    margin: auto;
+   text-align: center;
+}
+
+.octave {
+   opacity: 0.4;
 }

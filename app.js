@@ -1,11 +1,20 @@
-(function() {
-
 angular.
-module('app', []).
+module('app', ['ngSanitize']).
+run(function($rootScope) {
+   $rootScope.pprintNote = function(name) {
+      return name[0].toUpperCase() +
+             name.substring(1)
+                 .replace(/\d/g, '<span class="octave">$&</span>')
+                 .replace("#", '&#9839;')
+                 .replace("b", '&#9837;')
+                 .replace("maj", ' major');
+   }
+}).
 controller('ChartController', function() {
    this.fingerings = fingerings;
    this.notes = notes;
    this.scales = scales;
+   this.menu = menu;
 
    this.scale = "Cmaj";
 })
@@ -47,30 +56,55 @@ var fingerings = [
 
 var notes = {
    "A4":  fingerings[0],
-   "A#4": fingerings[1],  "Bb4": fingerings[1],
-   "B4":  fingerings[2],
-   "C5":  fingerings[3],
-   "C#5": fingerings[4],  "Db5": fingerings[4],
+   "A#4": fingerings[1],  "Bb4": fingerings[1], "A#4/Bb4": fingerings[1],
+   "B4":  fingerings[2],  "Cb5": fingerings[2],
+   "C5":  fingerings[3],  "B#4": fingerings[3],
+   "C#5": fingerings[4],  "Db5": fingerings[4], "C#5/Db5": fingerings[4],
    "D5":  fingerings[5],
-   "D#5": fingerings[6],  "Eb5": fingerings[6],
-   "E5":  fingerings[7],
-   "F5":  fingerings[8],
-   "F#5": fingerings[9],  "Gb5": fingerings[9],
+   "D#5": fingerings[6],  "Eb5": fingerings[6], "D#5/Eb5": fingerings[6],
+   "E5":  fingerings[7],  "Fb5": fingerings[7],
+   "F5":  fingerings[8],  "E#5": fingerings[8],
+   "F#5": fingerings[9],  "Gb5": fingerings[9], "F#5/Gb5": fingerings[9],
    "G5":  fingerings[10],
-   "G#5": fingerings[11], "Ab5": fingerings[11],
+   "G#5": fingerings[11], "Ab5": fingerings[11], "G#5/Ab5": fingerings[11],
    "A5":  fingerings[12],
-   "A#5": fingerings[13], "Bb5": fingerings[13],
-   "B5":  fingerings[14],
-   "C6":  fingerings[15],
-   "C#6": fingerings[16], "Db6": fingerings[16],
+   "A#5": fingerings[13], "Bb5": fingerings[13], "A#5/Bb5": fingerings[13],
+   "B5":  fingerings[14], "Cb6": fingerings[14],
+   "C6":  fingerings[15], "B#5": fingerings[15],
+   "C#6": fingerings[16], "Db6": fingerings[16], "C#6/Db6": fingerings[16],
    "D6":  fingerings[17],
-   "D#6": fingerings[18], "Eb6": fingerings[18],
+   "D#6": fingerings[18], "Eb6": fingerings[18], "D#6/Eb6": fingerings[18],
    "E6":  fingerings[19],
-   "F6":  fingerings[20]
+   "F6":  fingerings[20], "E#6": fingerings[20]
 };
 
 var scales = {
-   "chromatic": [ "A4", "A#4", "B4", "C5", "C#5", "D5", "D#5", "E5", "F5", "F#5", "G5", "G#5", "A5", "A#5", "B5", "C6", "C#6", "D6", "D#6", "E6", "F6" ],
+   //notes
+   "A4":      ["A4"],
+   "A#4/Bb4": ["A#4/Bb4"],
+   "B4":      ["B4"],
+   "C5":      ["C5"],
+   "C#5/Db5": ["C#5/Db5"],
+   "D5":      ["D5"],
+   "D#5/Eb5": ["D#5/Eb5"],
+   "E5":      ["E5"],
+   "F5":      ["F5"],
+   "F#5/Gb5": ["F#5/Gb5"],
+   "G5":      ["G5"],
+   "G#5/Ab5": ["G#5/Ab5"],
+   "A5":      ["A5"],
+   "A#5/Bb5": ["A#5/Bb5"],
+   "B5":      ["B5"],
+   "C6":      ["C6"],
+   "C#6/Db6": ["C#6/Db6"],
+   "D6":      ["D6"],
+   "D#6/Eb6": ["D#6/Eb6"],
+   "E6":      ["E6"],
+   "F6":      ["F6"],
+   //stuff
+   "chromatic": [ "A4", "A#4/Bb4", "B4", "C5", "C#5/Db5", "D5", "D#5/Eb5", "E5", "F5", "F#5/Gb5", "G5", "G#5/Ab5", "A5", "A#5/Bb5", "B5", "C6", "C#6/Db6", "D6", "D#6/Eb6", "E6", "F6" ],
+   "naturals": [ "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6", "F6" ],
+   "accidentals": [ "A#4/Bb4", "C#5/Db5", "D#5/Eb5", "F#5/Gb5", "G#5/Ab5", "A#5/Bb5", "C#6/Db6", "D#6/Eb6" ],
    //no accidentals
    "Cmaj": ["C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6"],
    //sharps
@@ -91,4 +125,16 @@ var scales = {
    "Cbmaj": ["Cb5", "Db5", "Eb5", "Fb5", "Gb5", "Ab5", "Bb5", "Cb6"]
 };
 
-})();
+var menu = {
+   "Notes": [
+      [ "A4", "A#4/Bb4", "B4" ],
+      [ "C5", "C#5/Db5", "D5", "D#5/Eb5", "E5", "F5", "F#5/Gb5", "G5", "G#5/Ab5", "A5", "A#5/Bb5", "B5" ],
+      [ "C6", "C#6/Db6", "D6", "D#6/Eb6", "E6", "F6" ],
+      [ "chromatic", "naturals", "accidentals" ]
+   ],
+   "Major Scales": [
+      [ "Cmaj" ],
+      [ "Gmaj", "Dmaj", "Amaj", "Emaj", "Bmaj", "F#maj", "C#maj" ],
+      [ "Fmaj", "Bbmaj", "Ebmaj", "Abmaj", "Dbmaj", "Gbmaj", "Cbmaj" ]
+   ]
+}
