@@ -4,6 +4,7 @@
   <title>Ocarina Fingering Charts</title>
   <script type="text/javascript" src="angular.js"></script>
   <script type="text/javascript" src="angular-sanitize.js"></script>
+  <script type="text/javascript" src="angular-route.js"></script>
   <script type="text/javascript" src="app.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
@@ -15,7 +16,7 @@
      <div class="category-name">{{ category }} </div>
      <div class="list">
       <div class="category-sublist" ng-repeat="sublist in list">
-       <a href="#" class="scale-choice" ng-repeat="scale in sublist" ng-click="ctrl.scale = scale" ng-bind-html="$root.pprintNote(scale)"></a>
+       <a href="#!/{{ scale }}" class="scale-choice" ng-repeat="scale in sublist" ng-click="ctrl.scale = scale" ng-bind-html="$root.pprintNote(scale)"></a>
       </div>
      </div>
     </div>
