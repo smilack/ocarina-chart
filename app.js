@@ -1,22 +1,33 @@
 angular.
-module('app', ['ngSanitize']).
+module('app', ['ngSanitize', 'ngRoute']).
+config(function($routeProvider, $locationProvider) {
+   $routeProvider.when('/:scale', {
+      controller: 'ChartController'
+   });
+}).
 run(function($rootScope) {
    $rootScope.pprintNote = function(name) {
       return name[0].toUpperCase() +
              name.substring(1)
                  .replace(/\d/g, '<span class="octave">$&</span>')
-                 .replace("#", '&#9839;')
-                 .replace("b", '&#9837;')
+                 .replace("sharp", '&#9839;')
+                 .replace("flat", '&#9837;')
+                 .replace("-", '/')
                  .replace("maj", ' major');
    }
 }).
-controller('ChartController', function() {
+controller('ChartController', function($scope, $routeParams) {
    this.fingerings = fingerings;
    this.notes = notes;
    this.scales = scales;
    this.menu = menu;
 
    this.scale = "Cmaj";
+
+   var ctrl = this;
+   $scope.$on('$routeChangeSuccess', function() {
+      ctrl.scale = $routeParams.scale;
+   });
 })
 .directive('ocarina', function() {
    return {
@@ -55,86 +66,86 @@ var fingerings = [
 ];
 
 var notes = {
-   "A4":  fingerings[0],
-   "A#4": fingerings[1],  "Bb4": fingerings[1], "A#4/Bb4": fingerings[1],
-   "B4":  fingerings[2],  "Cb5": fingerings[2],
-   "C5":  fingerings[3],  "B#4": fingerings[3],
-   "C#5": fingerings[4],  "Db5": fingerings[4], "C#5/Db5": fingerings[4],
-   "D5":  fingerings[5],
-   "D#5": fingerings[6],  "Eb5": fingerings[6], "D#5/Eb5": fingerings[6],
-   "E5":  fingerings[7],  "Fb5": fingerings[7],
-   "F5":  fingerings[8],  "E#5": fingerings[8],
-   "F#5": fingerings[9],  "Gb5": fingerings[9], "F#5/Gb5": fingerings[9],
-   "G5":  fingerings[10],
-   "G#5": fingerings[11], "Ab5": fingerings[11], "G#5/Ab5": fingerings[11],
-   "A5":  fingerings[12],
-   "A#5": fingerings[13], "Bb5": fingerings[13], "A#5/Bb5": fingerings[13],
-   "B5":  fingerings[14], "Cb6": fingerings[14],
-   "C6":  fingerings[15], "B#5": fingerings[15],
-   "C#6": fingerings[16], "Db6": fingerings[16], "C#6/Db6": fingerings[16],
-   "D6":  fingerings[17],
-   "D#6": fingerings[18], "Eb6": fingerings[18], "D#6/Eb6": fingerings[18],
-   "E6":  fingerings[19],
-   "F6":  fingerings[20], "E#6": fingerings[20]
+   "A4":      fingerings[0],
+   "Asharp4": fingerings[1],  "Bflat4":  fingerings[1],  "Asharp4-Bflat4": fingerings[1],
+   "B4":      fingerings[2],  "Cflat5":  fingerings[2],
+   "C5":      fingerings[3],  "Bsharp4": fingerings[3],
+   "Csharp5": fingerings[4],  "Dflat5":  fingerings[4],  "Csharp5-Dflat5": fingerings[4],
+   "D5":      fingerings[5],
+   "Dsharp5": fingerings[6],  "Eflat5":  fingerings[6],  "Dsharp5-Eflat5": fingerings[6],
+   "E5":      fingerings[7],  "Fflat5":  fingerings[7],
+   "F5":      fingerings[8],  "Esharp5": fingerings[8],
+   "Fsharp5": fingerings[9],  "Gflat5":  fingerings[9],  "Fsharp5-Gflat5": fingerings[9],
+   "G5":      fingerings[10],
+   "Gsharp5": fingerings[11], "Aflat5":  fingerings[11], "Gsharp5-Aflat5": fingerings[11],
+   "A5":      fingerings[12],
+   "Asharp5": fingerings[13], "Bflat5":  fingerings[13], "Asharp5-Bflat5": fingerings[13],
+   "B5":      fingerings[14], "Cflat6":  fingerings[14],
+   "C6":      fingerings[15], "Bsharp5": fingerings[15],
+   "Csharp6": fingerings[16], "Dflat6":  fingerings[16], "Csharp6-Dflat6": fingerings[16],
+   "D6":      fingerings[17],
+   "Dsharp6": fingerings[18], "Eflat6":  fingerings[18], "Dsharp6-Eflat6": fingerings[18],
+   "E6":      fingerings[19],
+   "F6":      fingerings[20], "Esharp6": fingerings[20]
 };
 
 var scales = {
    //notes
-   "A4":      ["A4"],
-   "A#4/Bb4": ["A#4/Bb4"],
-   "B4":      ["B4"],
-   "C5":      ["C5"],
-   "C#5/Db5": ["C#5/Db5"],
-   "D5":      ["D5"],
-   "D#5/Eb5": ["D#5/Eb5"],
-   "E5":      ["E5"],
-   "F5":      ["F5"],
-   "F#5/Gb5": ["F#5/Gb5"],
-   "G5":      ["G5"],
-   "G#5/Ab5": ["G#5/Ab5"],
-   "A5":      ["A5"],
-   "A#5/Bb5": ["A#5/Bb5"],
-   "B5":      ["B5"],
-   "C6":      ["C6"],
-   "C#6/Db6": ["C#6/Db6"],
-   "D6":      ["D6"],
-   "D#6/Eb6": ["D#6/Eb6"],
-   "E6":      ["E6"],
-   "F6":      ["F6"],
+   "A4":             ["A4"],
+   "Asharp4-Bflat4": ["Asharp4-Bflat4"],
+   "B4":             ["B4"],
+   "C5":             ["C5"],
+   "Csharp5-Dflat5": ["Csharp5-Dflat5"],
+   "D5":             ["D5"],
+   "Dsharp5-Eflat5": ["Dsharp5-Eflat5"],
+   "E5":             ["E5"],
+   "F5":             ["F5"],
+   "Fsharp5-Gflat5": ["Fsharp5-Gflat5"],
+   "G5":             ["G5"],
+   "Gsharp5-Aflat5": ["Gsharp5-Aflat5"],
+   "A5":             ["A5"],
+   "Asharp5-Bflat5": ["Asharp5-Bflat5"],
+   "B5":             ["B5"],
+   "C6":             ["C6"],
+   "Csharp6-Dflat6": ["Csharp6-Dflat6"],
+   "D6":             ["D6"],
+   "Dsharp6-Eflat6": ["Dsharp6-Eflat6"],
+   "E6":             ["E6"],
+   "F6":             ["F6"],
    //stuff
-   "chromatic": [ "A4", "A#4/Bb4", "B4", "C5", "C#5/Db5", "D5", "D#5/Eb5", "E5", "F5", "F#5/Gb5", "G5", "G#5/Ab5", "A5", "A#5/Bb5", "B5", "C6", "C#6/Db6", "D6", "D#6/Eb6", "E6", "F6" ],
-   "naturals": [ "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6", "F6" ],
-   "accidentals": [ "A#4/Bb4", "C#5/Db5", "D#5/Eb5", "F#5/Gb5", "G#5/Ab5", "A#5/Bb5", "C#6/Db6", "D#6/Eb6" ],
+   "chromatic":   [ "A4", "Asharp4-Bflat4", "B4", "C5", "Csharp5-Dflat5", "D5", "Dsharp5-Eflat5", "E5", "F5", "Fsharp5-Gflat5", "G5", "Gsharp5-Aflat5", "A5", "Asharp5-Bflat5", "B5", "C6", "Csharp6-Dflat6", "D6", "Dsharp6-Eflat6", "E6", "F6" ],
+   "naturals":    [ "A4", "B4", "C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6", "D6", "E6", "F6" ],
+   "accidentals": [ "Asharp4-Bflat4", "Csharp5-Dflat5", "Dsharp5-Eflat5", "Fsharp5-Gflat5", "Gsharp5-Aflat5", "Asharp5-Bflat5", "Csharp6-Dflat6", "Dsharp6-Eflat6" ],
    //no accidentals
    "Cmaj": ["C5", "D5", "E5", "F5", "G5", "A5", "B5", "C6"],
    //sharps
-   "Gmaj": ["G4", "A4", "B4", "C5", "D5", "E5", "F#5", "G5", "A5", "B5", "C6", "D6", "E6", "F#6", "G6"],
-   "Dmaj": ["D5", "E5", "F#5", "G5", "A5", "B5", "C#6", "D6"],
-   "Amaj": ["A4", "B4", "C#5", "D5", "E5", "F#5", "G#5", "A5"],
-   "Emaj": ["E5", "F#5", "G#5", "A5", "B5", "C#6", "D#6", "E6"],
-   "Bmaj": ["B4", "C#5", "D#5", "E5", "F#5", "G#5", "A#5", "B5"],
-   "F#maj": ["F#5", "G#5", "A#5", "B5", "C#6", "D#6", "E#6", "F#6"],
-   "C#maj": ["C#5", "D#5", "E#5", "F#5", "G#5", "A#5", "B#5", "C#6"],
+   "Gmaj":      ["G4", "A4", "B4", "C5", "D5", "E5", "Fsharp5", "G5", "A5", "B5", "C6", "D6", "E6", "Fsharp6", "G6"],
+   "Dmaj":      ["D5", "E5", "Fsharp5", "G5", "A5", "B5", "Csharp6", "D6"],
+   "Amaj":      ["A4", "B4", "Csharp5", "D5", "E5", "Fsharp5", "Gsharp5", "A5"],
+   "Emaj":      ["E5", "Fsharp5", "Gsharp5", "A5", "B5", "Csharp6", "Dsharp6", "E6"],
+   "Bmaj":      ["B4", "Csharp5", "Dsharp5", "E5", "Fsharp5", "Gsharp5", "Asharp5", "B5"],
+   "Fsharpmaj": ["Fsharp5", "Gsharp5", "Asharp5", "B5", "Csharp6", "Dsharp6", "Esharp6", "Fsharp6"],
+   "Csharpmaj": ["Csharp5", "Dsharp5", "Esharp5", "Fsharp5", "Gsharp5", "Asharp5", "Bsharp5", "Csharp6"],
    //flats
-   "Fmaj": ["F5", "G5", "A5", "Bb5", "C6", "D6", "E6", "F6"],
-   "Bbmaj": ["Bb4", "C5", "D5", "Eb5", "F5", "G5", "A5", "Bb5"],
-   "Ebmaj": ["Eb5", "F5", "G5", "Ab5", "Bb5", "C6", "D6", "Eb6"],
-   "Abmaj": ["Ab4", "Bb4", "C5", "Db5", "Eb5", "F5", "G5", "Ab5", "Bb5", "C6", "Db6", "Eb6", "F6", "G6", "Ab6"],
-   "Dbmaj": ["Db5", "Eb5", "F5", "Gb5", "Ab5", "Bb5", "C6", "Db6"],
-   "Gbmaj": ["Gb4", "Ab4", "Bb4", "Cb5", "Db5", "Eb5", "F5", "Gb5", "Ab5", "Bb5", "Cb6", "Db6", "Eb6", "F6", "Gb6"],
-   "Cbmaj": ["Cb5", "Db5", "Eb5", "Fb5", "Gb5", "Ab5", "Bb5", "Cb6"]
+   "Fmaj":     ["F5", "G5", "A5", "Bflat5", "C6", "D6", "E6", "F6"],
+   "Bflatmaj": ["Bflat4", "C5", "D5", "Eflat5", "F5", "G5", "A5", "Bflat5"],
+   "Eflatmaj": ["Eflat5", "F5", "G5", "Aflat5", "Bflat5", "C6", "D6", "Eflat6"],
+   "Aflatmaj": ["Aflat4", "Bflat4", "C5", "Dflat5", "Eflat5", "F5", "G5", "Aflat5", "Bflat5", "C6", "Dflat6", "Eflat6", "F6", "G6", "Aflat6"],
+   "Dflatmaj": ["Dflat5", "Eflat5", "F5", "Gflat5", "Aflat5", "Bflat5", "C6", "Dflat6"],
+   "Gflatmaj": ["Gflat4", "Aflat4", "Bflat4", "Cflat5", "Dflat5", "Eflat5", "F5", "Gflat5", "Aflat5", "Bflat5", "Cflat6", "Dflat6", "Eflat6", "F6", "Gflat6"],
+   "Cflatmaj": ["Cflat5", "Dflat5", "Eflat5", "Fflat5", "Gflat5", "Aflat5", "Bflat5", "Cflat6"]
 };
 
 var menu = {
    "Notes": [
-      [ "A4", "A#4/Bb4", "B4" ],
-      [ "C5", "C#5/Db5", "D5", "D#5/Eb5", "E5", "F5", "F#5/Gb5", "G5", "G#5/Ab5", "A5", "A#5/Bb5", "B5" ],
-      [ "C6", "C#6/Db6", "D6", "D#6/Eb6", "E6", "F6" ],
+      [ "A4", "Asharp4-Bflat4", "B4" ],
+      [ "C5", "Csharp5-Dflat5", "D5", "Dsharp5-Eflat5", "E5", "F5", "Fsharp5-Gflat5", "G5", "Gsharp5-Aflat5", "A5", "Asharp5-Bflat5", "B5" ],
+      [ "C6", "Csharp6-Dflat6", "D6", "Dsharp6-Eflat6", "E6", "F6" ],
       [ "chromatic", "naturals", "accidentals" ]
    ],
    "Major Scales": [
       [ "Cmaj" ],
-      [ "Gmaj", "Dmaj", "Amaj", "Emaj", "Bmaj", "F#maj", "C#maj" ],
-      [ "Fmaj", "Bbmaj", "Ebmaj", "Abmaj", "Dbmaj", "Gbmaj", "Cbmaj" ]
+      [ "Gmaj", "Dmaj", "Amaj", "Emaj", "Bmaj", "Fsharpmaj", "Csharpmaj" ],
+      [ "Fmaj", "Bflatmaj", "Eflatmaj", "Aflatmaj", "Dflatmaj", "Gflatmaj", "Cflatmaj" ]
    ]
 }
